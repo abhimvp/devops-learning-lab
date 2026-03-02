@@ -16,6 +16,11 @@ services:
       - app-network
     depends_on:
       - db
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
   db:
     image: postgres:18.3-alpine3.23
     environment:
@@ -54,6 +59,10 @@ networks:
 - `depends_on: db`
   - Starts `db` before `app` during compose startup order.
   - Note: this controls startup order, not database readiness.
+- `develop.watch` with `action: sync` (`path: .` → `target: /app`)
+  - Syncs local source changes into the running `app` container during development.
+  - Reduces rebuild/restart cycles for code-only changes and speeds up feedback.
+  - Keeps container runtime close to production while preserving local dev convenience.
 
 ## Service: db
 

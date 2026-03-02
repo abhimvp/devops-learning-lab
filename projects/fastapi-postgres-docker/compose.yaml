@@ -9,6 +9,11 @@ services:
       - app-network
     depends_on:
       - db
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
   db:
     image: postgres:18.3-alpine3.23
     environment:
@@ -19,6 +24,8 @@ services:
       - pg-data:/var/lib/postgresql/data
     networks:
       - app-network
+    ports:
+      - "5432:5432"
 volumes:
   pg-data:
 networks:

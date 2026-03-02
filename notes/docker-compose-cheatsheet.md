@@ -175,6 +175,14 @@ docker compose exec app uv run alembic upgrade head
 
 ---
 
+## `develop.watch` Sync vs Rebuild
+
+- Use `develop.watch` with `action: sync` for **code-only changes** (fast feedback, no full image rebuild).
+- Use `docker compose up --build` when you change **Dockerfile, dependencies, system packages, or build-time config**.
+- Rule of thumb: if runtime files changed, sync is enough; if image layers changed, rebuild.
+
+---
+
 ## Things to Never Get Wrong
 
 1. **Never use `localhost` as DB host inside Docker** — use the service name (`db`)

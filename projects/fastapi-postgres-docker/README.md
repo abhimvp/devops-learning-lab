@@ -52,6 +52,23 @@ uv run fastapi deploy
   - `pg-data:/var/lib/postgresql/data` is a Docker **named volume**.
   - Data is persisted on your local machine in Docker-managed storage.
   - `docker compose down` keeps DB data; `docker compose down -v` deletes it.
+- now setup `.env` file for the fastapi project to make use of environment variables and all - see the variables in .env in `.env.example` file.
+- To read the environment variables from python - we will do following setup:
+  - create `src` folder
+    - create `__init__.py` file
+    - create `config.py` file - here we setup pydantic-setting - which can read environment variables from env files
+
+```bash
+# when we do - docker compose up - we see this if we everything goes well
+ ✔ Image postgres:18.3-alpine3.23              Pulled
+ ✔ Image fastapi-postgres-docker-app           Built
+ ✔ Network fastapi-postgres-docker_app-network Created
+ ✔ Volume fastapi-postgres-docker_pg-data      Created
+ ✔ Container fastapi-postgres-docker-db-1      Created
+ ✔ Container fastapi-postgres-docker-app-1     Created
+```
+
+- also add `docker compose watch` allows us to preview changes we make to our containers or code in it in real time - useful in dev mode and add the instructions for it in compose.yaml file. This will also us to reload our fastapi server when we make changes.
 
 ## Dockerfile Notes
 
