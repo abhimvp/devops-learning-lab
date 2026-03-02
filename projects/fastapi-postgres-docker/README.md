@@ -41,6 +41,17 @@ uv run fastapi deploy
 - Now have the task of containerizing our simple fast API application
   - create `Dockerfile` in the root project directory
   - since we're using `uv` - we will be making use of `uv image` in docker - uv project provides a [image](https://docs.astral.sh/uv/guides/integration/docker/) for docker - refer this [guide](https://docs.astral.sh/uv/getting-started/installation/#docker).
+- Now to make this work with postgresql - we are going to make use of [docker compose](https://docs.docker.com/compose/). Docker compose allows you to run multiple containers and set up configurations on how they will work together and how they will communicate to each other & rest of configurations to make them work each other.
+  - create a `compose.yaml` file - inside it we will describe the different services we shall have within our setup.
+  - different sections in it:
+    - `services` - different containers you want to run together like application(fastapi app) , database(postgreSQL container) ..etc
+    - `volumes` - ways to store data - docker utilizes our physical disk to store things outside the container - such that when the container is not running - data is persisted
+    - `networks` - specifies how these containers talk to each other. so we create a simple network and then we shall have our database having an IP and a host which we shall connect to from our application ..etc
+- get the postgres docker images from [this reference](https://hub.docker.com/_/postgres)
+- Volume behavior in this setup:
+  - `pg-data:/var/lib/postgresql/data` is a Docker **named volume**.
+  - Data is persisted on your local machine in Docker-managed storage.
+  - `docker compose down` keeps DB data; `docker compose down -v` deletes it.
 
 ## Dockerfile Notes
 
@@ -51,3 +62,8 @@ uv run fastapi deploy
 - `COPY . .`: copies the rest of application code.
 - `EXPOSE 8000`: declares the app port.
 - `CMD ["uv", "run", "fastapi", "dev", "--host", "0.0.0.0", "--port", "8000"]`: starts the FastAPI app on all interfaces at port 8000.
+
+## Container References
+
+- Dockerfile explanation: [DOCKERFILE-REFERENCE.md](./DOCKERFILE-REFERENCE.md)
+- Compose explanation: [COMPOSE-REFERENCE.md](./COMPOSE-REFERENCE.md)
