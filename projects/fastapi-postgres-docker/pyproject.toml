@@ -3,5 +3,8 @@ name = "fastapi-postgres-docker"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
+    "advanced-alchemy[cli]>=1.8.2",
+    "asyncpg>=0.31.0",
     "fastapi[standard]>=0.135.1",
+    "pydantic-settings>=2.13.1",
 ]
